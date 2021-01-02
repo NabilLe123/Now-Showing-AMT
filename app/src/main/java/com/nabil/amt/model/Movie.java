@@ -1,14 +1,20 @@
 package com.nabil.amt.model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
+@Entity(tableName = "movie")
 public class Movie {
+    @PrimaryKey
+    @SerializedName("id")
+    private Integer id;
+
     @SerializedName("adult")
     private Boolean adult;
     @SerializedName("backdrop_path")
     private String backdropPath;
-    @SerializedName("id")
-    private Integer id;
     @SerializedName("original_language")
     private String originalLanguage;
     @SerializedName("original_title")
