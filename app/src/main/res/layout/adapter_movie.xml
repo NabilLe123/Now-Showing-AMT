@@ -37,14 +37,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/quick_sand_medium"
             android:text="@{movieAdapterVM.tvMovieName}"
+            android:textColor="@color/main_text"
             android:textSize="@dimen/main_text"
             tools:text="Avengers: Age of Ultron" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/quick_sand_medium"
             android:text="@{movieAdapterVM.tvMovieReleaseDate}"
+            android:textColor="@color/main_text"
             android:textSize="@dimen/main_text_small"
             tools:text="2020" />
 

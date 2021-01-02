@@ -15,6 +15,6 @@ public interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertMovies(List<Movie> movies);
 
-    @Query("SELECT * FROM movie")
+    @Query("SELECT * FROM movie ORDER BY id ASC")
     LiveData<List<Movie>> fetchAllMovies();
 }

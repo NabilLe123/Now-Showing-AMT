@@ -10,5 +10,5 @@ import com.nabil.amt.model.Movie;
 public abstract class AppDatabase extends RoomDatabase {
     public static final String DATABASE_NAME = "amt_db";
 
-    public abstract MovieDao serviceDao();
+    public abstract MovieDao movieDao();
 }

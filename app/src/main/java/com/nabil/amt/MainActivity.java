@@ -1,6 +1,8 @@
 package com.nabil.amt;
 
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -9,12 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nabil.amt.adapter.MovieAdapter;
 import com.nabil.amt.adapter.NewVideoAdapter;
+import com.nabil.amt.database.RoomDbInstance;
 import com.nabil.amt.databinding.ActivityMainBinding;
+import com.nabil.amt.model.Movie;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private MainActivityVM mainActivityVM;
+    private NewVideoAdapter newVideoAdapter;
+    private MovieAdapter newReleaseAdapter;
+    private MovieAdapter bestRatedMovieAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,36 +32,58 @@ public class MainActivity extends AppCompatActivity {
 
     private void initDataBinding() {
         ActivityMainBinding activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        mainActivityVM = new MainActivityVM(this);
+        MainActivityVM mainActivityVM = new MainActivityVM(this);
         activityMainBinding.setMainActivityVM(mainActivityVM);
 
+        RoomDbInstance.getAppDb(this).movieDao().fetchAllMovies().observe(this, movies -> {
+            Log.d("now_showing", "fetchAllMovies: " + movies.size());
+
+            setNewVideoList(activityMainBinding.rvNewVideo, movies);
+            setNewReleaseList(activityMainBinding.rvNewRelease, movies);
+            setBestRatedList(activityMainBinding.rvBestRated, movies);
+        });
         mainActivityVM.loadMovies();
-        initNewVideoList(activityMainBinding.rvNewVideo);
-        initNewReleaseList(activityMainBinding.rvNewRelease);
-        initBestRatedList(activityMainBinding.rvBestRated);
     }
 
-    private void initNewVideoList(RecyclerView rvNewVideo) {
-        rvNewVideo.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        NewVideoAdapter newVideoAdapter = new NewVideoAdapter(new ArrayList<>());
-        rvNewVideo.setAdapter(newVideoAdapter);
+    private void setNewVideoList(RecyclerView rvNewVideo, List<Movie> movies) {
+        List<Movie> movies1 = new ArrayList<>();
+        for (Movie movie : movies) {
+            if (!TextUtils.isEmpty(movie.getBackdropPath()))
+                movies1.add(movie);
+        }
 
-        mainActivityVM.newVideosList.observe(this, newVideoAdapter::setMovies);
+        if (newVideoAdapter == null) {
+            rvNewVideo.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+            newVideoAdapter = new NewVideoAdapter(movies1);
+            rvNewVideo.setAdapter(newVideoAdapter);
+        } else {
+            newVideoAdapter.setMovies(movies1);
+        }
     }
 
-    private void initNewReleaseList(RecyclerView rvNewRelease) {
-        rvNewRelease.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        MovieAdapter movieAdapter = new MovieAdapter(new ArrayList<>());
-        rvNewRelease.setAdapter(movieAdapter);
-
-        mainActivityVM.newReleasesList.observe(this, movieAdapter::setMovies);
+    private void setNewReleaseList(RecyclerView rvNewRelease, List<Movie> movies) {
+        if (newReleaseAdapter == null) {
+            rvNewRelease.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+            newReleaseAdapter = new MovieAdapter(movies);
+            rvNewRelease.setAdapter(newReleaseAdapter);
+        } else {
+            newReleaseAdapter.setMovies(movies);
+        }
     }
 
-    private void initBestRatedList(RecyclerView rvBestRated) {
-        rvBestRated.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        MovieAdapter movieAdapter = new MovieAdapter(new ArrayList<>());
-        rvBestRated.setAdapter(movieAdapter);
+    private void setBestRatedList(RecyclerView rvBestRated, List<Movie> movies) {
+        List<Movie> movies2 = new ArrayList<>();
+        for (Movie movie : movies) {
+            if (movie.getVoteAverage() > 5)
+                movies2.add(movie);
+        }
 
-        mainActivityVM.bestRatedList.observe(this, movieAdapter::setMovies);
+        if (bestRatedMovieAdapter == null) {
+            rvBestRated.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+            bestRatedMovieAdapter = new MovieAdapter(movies2);
+            rvBestRated.setAdapter(bestRatedMovieAdapter);
+        } else {
+            bestRatedMovieAdapter.setMovies(movies2);
+        }
     }
 }

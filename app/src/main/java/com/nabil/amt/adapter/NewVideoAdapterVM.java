@@ -9,6 +9,7 @@ import androidx.databinding.BindingAdapter;
 import com.bumptech.glide.Glide;
 import com.nabil.amt.R;
 import com.nabil.amt.api.ApiClient;
+import com.nabil.amt.helper.Misc;
 import com.nabil.amt.model.Movie;
 
 public class NewVideoAdapterVM extends BaseObservable {
@@ -38,7 +39,7 @@ public class NewVideoAdapterVM extends BaseObservable {
     }
 
     public String getTvMovieReleaseDate() {
-        return movie.getReleaseDate();
+        return Misc.convertDateFormat(movie.getReleaseDate());
     }
 
     public void setMovie(Movie movie) {
