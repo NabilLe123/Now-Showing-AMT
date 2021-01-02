@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="main_spacing">10dp</dimen>
-    <dimen name="main_spacing_big">15dp</dimen>
+    <dimen name="main_spacing_big">20dp</dimen>
     <dimen name="main_text">16sp</dimen>
     <dimen name="main_text_small">14sp</dimen>
 </resources>

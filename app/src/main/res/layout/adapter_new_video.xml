@@ -15,7 +15,7 @@
     <LinearLayout
         android:id="@+id/item_new_video"
         android:layout_width="250dp"
-        android:layout_height="wrap_content"
+        android:layout_height="230dp"
         android:layout_margin="@dimen/main_spacing"
         android:orientation="vertical">
 
@@ -37,15 +37,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:ellipsize="end"
             android:fontFamily="@font/quick_sand_medium"
+            android:maxLines="2"
             android:text="@{newVideoAdapterVM.tvMovieName}"
             android:textColor="@color/main_text"
             android:textSize="@dimen/main_text"
-            tools:text="Avengers: Age of Ultron" />
+            tools:text="Avengers: Age of Ultron Avengers: Age of Ultron" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
             android:fontFamily="@font/quick_sand_medium"
             android:text="@{newVideoAdapterVM.tvMovieReleaseDate}"
             android:textColor="@color/main_text"
