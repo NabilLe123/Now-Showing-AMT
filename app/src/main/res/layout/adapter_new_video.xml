@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="newVideoAdapterVM"
+            type="com.nabil.amt.adapter.NewVideoAdapterVM" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/item_new_video"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/main_spacing"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:elevation="@dimen/main_spacing"
+            app:cardCornerRadius="@dimen/main_spacing">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/placeholder1"
+                app:newVideoImage="@{newVideoAdapterVM.newVideoImage}" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{newVideoAdapterVM.tvMovieName}"
+            android:textSize="@dimen/main_text"
+            tools:text="Avengers: Age of Ultron" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{newVideoAdapterVM.tvMovieReleaseDate}"
+            android:textSize="@dimen/main_text_small"
+            tools:text="2020" />
+
+    </LinearLayout>
+
+</layout>
